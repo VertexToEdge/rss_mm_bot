@@ -26,7 +26,7 @@ HACKERNEWS_WEBHOOK = os.environ.get("HACKERNEWS_WEBHOOK_URL", "")
 POLL_INTERVAL = int(os.environ.get("POLL_INTERVAL_SECONDS", "300"))
 DATA_DIR = Path(os.environ.get("DATA_DIR", "./data"))
 STATE_FILE = DATA_DIR / "sent.json"
-MAX_IDS_PER_FEED = 200
+MAX_IDS_PER_FEED = 1000
 
 
 # --- State ---
