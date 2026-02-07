@@ -1,0 +1,13 @@
+[project]
+name = "rss-bot"
+version = "0.1.0"
+description = "RSS feed bot for Mattermost"
+requires-python = ">=3.12"
+dependencies = [
+    "feedparser>=6.0",
+    "requests>=2.31",
+    "python-dotenv>=1.0",
+]
+
+[project.scripts]
+rss-bot = "main:run"
