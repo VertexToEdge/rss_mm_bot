@@ -20,6 +20,7 @@ log = logging.getLogger(__name__)
 GEEKNEWS_FEED_URL = "https://feeds.feedburner.com/geeknews-feed"
 HN_API_BASE = "https://hacker-news.firebaseio.com/v0"
 HN_STATE_KEY = "hackernews_top"
+HN_MIN_SCORE_COMMENTS = int(os.environ.get("HN_MIN_SCORE_COMMENTS", "100"))
 
 GEEKNEWS_WEBHOOK = os.environ.get("GEEKNEWS_WEBHOOK_URL", "")
 HACKERNEWS_WEBHOOK = os.environ.get("HACKERNEWS_WEBHOOK_URL", "")
@@ -213,6 +214,13 @@ def poll_hackernews(state: dict[str, list[str]]) -> None:
     for str_id in reversed(new_ids):
         item = fetch_hn_item(int(str_id))
         if not item or item.get("dead") or item.get("deleted"):
+            seen_list.append(str_id)
+            continue
+        score = item.get("score", 0)
+        descendants = item.get("descendants", 0)
+        if score + descendants < HN_MIN_SCORE_COMMENTS:
+            log.debug("HN item %s skipped (score=%d, comments=%d, sum=%d < %d)",
+                       str_id, score, descendants, score + descendants, HN_MIN_SCORE_COMMENTS)
             continue
         text = format_hackernews(item)
         if send_to_mattermost(HACKERNEWS_WEBHOOK, text):
