@@ -20,7 +20,7 @@ log = logging.getLogger(__name__)
 GEEKNEWS_FEED_URL = "https://feeds.feedburner.com/geeknews-feed"
 HN_API_BASE = "https://hacker-news.firebaseio.com/v0"
 HN_STATE_KEY = "hackernews_top"
-HN_MIN_SCORE_COMMENTS = int(os.environ.get("HN_MIN_SCORE_COMMENTS", "100"))
+HN_MIN_SCORE_COMMENTS = int(os.environ.get("HN_MIN_SCORE_COMMENTS", "50"))
 
 GEEKNEWS_WEBHOOK = os.environ.get("GEEKNEWS_WEBHOOK_URL", "")
 HACKERNEWS_WEBHOOK = os.environ.get("HACKERNEWS_WEBHOOK_URL", "")
